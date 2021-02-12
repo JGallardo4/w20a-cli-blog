@@ -15,7 +15,7 @@ def showAllPosts():
 	if len(result) == 0:
 		print("    No results found")
 	else:
-		print("> Posts:")
+		print("> ", len(result), "posts:")
 		for row in result:
 			print(row)
 	print("\n***\n")
@@ -56,9 +56,6 @@ while True:
 		print('You pressed ctrl+c')
 		quit()
 
-# ADDITIONAL REQUIREMENTS (Feb 11):
-
-#     Handle empty result sets from the SELECT statement
 #     Display the row count from your SELECT statement
 #     Add try/except to catch possible mariadb exceptions
 
