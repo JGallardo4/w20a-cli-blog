@@ -39,10 +39,15 @@ def login():
 	
 
 def authenticate():
-	username = input("Username: ")
+	global username
+	usernameInput = input("Username: ")
 	password = getpass()
 
-	return db.login(username, password)
+	if db.login(usernameInput, password):
+		username = usernameInput
+		return True
+	else:
+		return False
 
 def createUser():
 	username = input("Username: ")
