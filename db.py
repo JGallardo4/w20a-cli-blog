@@ -20,8 +20,8 @@ def get(command, arguments=[]):
         cursor = connection.cursor()
         cursor.execute(command, arguments)
         result = cursor.fetchall()
-    except:
-        print("DB Error")
+    except Exception as err:
+        print(err)
         quit()    
     else:        
         if (cursor != None):
@@ -59,6 +59,3 @@ def login(username, password):
 def createUser(username, password):
     put("INSERT INTO Users (Username, Password_String) VALUES (?, ?)", [username, password])
     print("\n✓ User created!\n")
-
-class FailedLoginException(Exception):
-    pass
