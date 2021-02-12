@@ -2,17 +2,28 @@
 
 import db
 
+username = None
+
 def writeNewPost(user):
 	content = input("Your post:\n")
 	db.createNewPost(user, content)
+	print()
 
 def showAllPosts():
-	for row in db.getPosts():
-		print(row)
+	result = db.getPosts()
+
+	if len(result) == 0:
+		print("    No results found")
+	else:
+		print("> Posts:")
+		for row in result:
+			print(row)
+	print("\n***\n")
+
+def hr():
+	print("---------------\n")
 
 def app():
-	username = input("Create a username: ")
-
 	print("Options:\n")
 	print("1. Write a new post")
 	print("2. See all other posts")
@@ -25,8 +36,9 @@ def app():
 				raise ValueError("Invalid option")
 			break
 		except:
-			print("Please make a valid selection")
+			print("\n**Please make a valid selection**")
 			continue
+	hr()
 
 	if (selection == 1):
 		writeNewPost(username)
@@ -35,9 +47,15 @@ def app():
 	elif (selection == 3):
 		quit()
 
+username = input("Create a username: ")
+
 while True:
-	app()
-	
+	try:
+		app()
+	except KeyboardInterrupt:
+		print('You pressed ctrl+c')
+		quit()
+
 # ADDITIONAL REQUIREMENTS (Feb 11):
 
 #     Handle empty result sets from the SELECT statement

@@ -1,9 +1,10 @@
 import dbcreds
 import mariadb
 import sys
-# set connection and cursor as global variables
+
 connection = None
 cursor = None
+
 def connect():
     return mariadb.connect(
         user=dbcreds.user,
