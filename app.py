@@ -1,8 +1,54 @@
 # Now that we can connect our python application to our DB, let's go ahead and create a strange application! This application will allow users to create blog posts from their terminal and see posts as well!
 
 import db
+from getpass import getpass
 
 username = None
+
+def login():
+	while True:
+		print("Options:\n")
+		print("1. Log in")
+		print("2. Create new user")
+		print("3. Quit")
+
+		while True:
+			try:
+				selection = int(input("\nYour choice: "))
+				if selection < 1 or selection > 3:
+					raise ValueError("Invalid option")
+				break
+			except:
+				print("\n**Please make a valid selection**")
+				continue
+		hr()
+
+		if (selection == 1):
+			if authenticate():
+				print("\n✓ Log in successful!\n")
+				while True:
+					app()
+			else:
+				print("\n✗ Incorrect username or password\n")
+				continue
+		elif (selection == 2):
+			createUser()
+			continue
+		elif (selection == 3):
+			quit()
+	
+
+def authenticate():
+	username = input("Username: ")
+	password = getpass()
+
+	return db.login(username, password)
+
+def createUser():
+	username = input("Username: ")
+	password = getpass()
+
+	db.createUser(username, password)	
 
 def writeNewPost(user):
 	content = input("Your post:\n")
@@ -47,30 +93,8 @@ def app():
 	elif (selection == 3):
 		quit()
 
-username = input("Create a username: ")
+login()
 
-while True:
-	try:
-		app()
-	except KeyboardInterrupt:
-		print('You pressed ctrl+c')
-		quit()
-
-#     Display the row count from your SELECT statement
-#     Add try/except to catch possible mariadb exceptions
-
- 
-
-# HINTS:
-
-#     I recommend you make extensive use of functions for this assignment. You should at least have 2 functions, one for running the insert and one for running the select
-
- 
-
-# BONUS:
-
-#     Make the application run in a loop. After the user selects option 1 or option 2 and enters the information if needed, the application should keep running. This also requires you to give the user an option to exit the application
-#     Give the application a real login functionality. This requires you to add modifications to the database to create a users table. The user should be prompted to enter a username and password to gain access. These users can be created using Dbeaver for testing.
 
  
 

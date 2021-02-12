@@ -45,3 +45,45 @@ def createNewPost(user, content):
             cursor.close()
         if (connection != None):        
             connection.close()
+
+def login(username, password):
+    try:
+        connection = connect()
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM Users WHERE Username = ? and Password_String = ?", [username, password])
+        result = cursor.fetchall()
+        if result:
+            return True
+        else:
+            raise FailedLoginException("Failed login")
+    except FailedLoginException:
+        return False
+    except:
+        print("DB Error")
+        quit()    
+    else:        
+        if (cursor != None):
+            cursor.close()
+        if (connection != None):        
+            connection.close()
+
+def createUser(username, password):
+    try:
+        connection = connect()
+        cursor = connection.cursor()
+        cursor.execute(
+            "INSERT INTO Users (Username, Password_String) VALUES (?, ?)",
+            [username, password])
+        connection.commit()
+    except:
+        print("DB Error")
+        quit()    
+    else:        
+        if (cursor != None):
+            cursor.close()
+        if (connection != None):        
+            connection.close()
+        print("\n✓ User created!\n")
+
+class FailedLoginException(Exception):
+    pass
